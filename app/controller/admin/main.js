@@ -78,6 +78,41 @@ class MainController extends Controller {
 
     }
 
+
+    async getAllUser() {
+
+        let sql = 'SELECT admin_user.userName as username,' +
+            'admin_user.password as password,' +
+            'admin_user.age as age,' +
+            'admin_user.address as address ' +
+            'FROM admin_user'
+
+        const results = await this.app.mysql.query(sql)
+
+        this.ctx.body = {
+            data: { userList: results }
+        }
+    }
+
+    async getUsersByUsername() {
+        let username = this.ctx.params.username
+
+        let sql = 'SELECT admin_user.userName as username,' +
+            'admin_user.password as password,' +
+            'admin_user.age as age,' +
+            'admin_user.address as address ' +
+            'FROM admin_user ' +
+            'WHERE admin_user.userName like ' + '\'%' + username + '%\''
+
+        console.log(sql)
+
+        const results = await this.app.mysql.query(sql)
+
+        this.ctx.body = {
+            data: { userList: results }
+        }
+    }
+
     //删除文章
     async delArticle() {
         let id = this.ctx.params.id
