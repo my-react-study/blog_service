@@ -14,4 +14,5 @@ module.exports = app => {
     router.get('/admin/getUsersByUsername/:username', controller.admin.main.getUsersByUsername)
     router.post('/admin/addUser', controller.admin.main.addUser)
     router.put('/admin/editUser', controller.admin.main.editUser)
+    router.delete('/admin/deleteUser/:id', controller.admin.main.deleteUser)
 }

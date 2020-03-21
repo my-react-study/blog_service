@@ -129,7 +129,6 @@ class MainController extends Controller {
         }
     }
 
-    //修改文章
     async editUser() {
         let tmpUser = this.ctx.request.body
 
@@ -139,6 +138,13 @@ class MainController extends Controller {
         this.ctx.body = {
             isSuccess: updateSuccess
         }
+    }
+
+    async deleteUser() {
+        let id = this.ctx.params.id
+        const result = await this.app.mysql.delete('admin_user', { 'id': id })
+        const deleteSuccess = result.affectedRows === 1;
+        this.ctx.body = { isSuccess: deleteSuccess }
     }
 
     //删除文章
