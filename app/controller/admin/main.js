@@ -83,9 +83,11 @@ class MainController extends Controller {
 
         let sql = 'SELECT admin_user.userName as username,' +
             'admin_user.password as password,' +
+            'admin_user.id as id,' +
             'admin_user.age as age,' +
             'admin_user.address as address ' +
-            'FROM admin_user'
+            'FROM admin_user ' +
+            'ORDER BY admin_user.id'
 
         const results = await this.app.mysql.query(sql)
 
@@ -99,10 +101,12 @@ class MainController extends Controller {
 
         let sql = 'SELECT admin_user.userName as username,' +
             'admin_user.password as password,' +
+            'admin_user.id as id,' +
             'admin_user.age as age,' +
             'admin_user.address as address ' +
             'FROM admin_user ' +
-            'WHERE admin_user.userName like ' + '\'%' + username + '%\''
+            'WHERE admin_user.userName like ' + '\'%' + username + '%\'' +
+            'ORDER BY admin_user.id'
 
         console.log(sql)
 
@@ -110,6 +114,30 @@ class MainController extends Controller {
 
         this.ctx.body = {
             data: { userList: results }
+        }
+    }
+
+    async addUser() {
+        let tmpUser = this.ctx.request.body
+        const result = await this.app.mysql.insert('admin_user', tmpUser)
+        const insertSuccess = result.affectedRows === 1
+        const insertId = result.insertId
+        console.log(result)
+        this.ctx.body = {
+            isSuccess: insertSuccess,
+            insertId: insertId
+        }
+    }
+
+    //修改文章
+    async editUser() {
+        let tmpUser = this.ctx.request.body
+
+        const result = await this.app.mysql.update('admin_user', tmpUser);
+        const updateSuccess = result.affectedRows === 1;
+        console.log(updateSuccess)
+        this.ctx.body = {
+            isSuccess: updateSuccess
         }
     }
 
