@@ -10,9 +10,9 @@ class MainController extends Controller {
     }
 
     async checkLogin() {
-        let userName = this.ctx.request.body.userName
+        let username = this.ctx.request.body.username
         let password = this.ctx.request.body.password
-        const sql = " SELECT userName FROM admin_user WHERE userName = '" + userName +
+        const sql = " SELECT username FROM admin_user WHERE username = '" + username +
             "' AND password = '" + password + "'"
 
         const res = await this.app.mysql.query(sql)
@@ -81,7 +81,7 @@ class MainController extends Controller {
 
     async getAllUser() {
 
-        let sql = 'SELECT admin_user.userName as username,' +
+        let sql = 'SELECT admin_user.username as username,' +
             'admin_user.password as password,' +
             'admin_user.id as id,' +
             'admin_user.age as age,' +
@@ -99,13 +99,13 @@ class MainController extends Controller {
     async getUsersByUsername() {
         let username = this.ctx.params.username
 
-        let sql = 'SELECT admin_user.userName as username,' +
+        let sql = 'SELECT admin_user.username as username,' +
             'admin_user.password as password,' +
             'admin_user.id as id,' +
             'admin_user.age as age,' +
             'admin_user.address as address ' +
             'FROM admin_user ' +
-            'WHERE admin_user.userName like ' + '\'%' + username + '%\'' +
+            'WHERE admin_user.username like ' + '\'%' + username + '%\'' +
             'ORDER BY admin_user.id'
 
         console.log(sql)
